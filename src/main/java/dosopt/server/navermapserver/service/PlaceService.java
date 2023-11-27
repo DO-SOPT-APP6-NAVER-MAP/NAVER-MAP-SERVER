@@ -1,5 +1,6 @@
 package dosopt.server.navermapserver.service;
 
+import dosopt.server.navermapserver.api.dto.RelatedPlaceResponse;
 import dosopt.server.navermapserver.domain.Direction;
 import dosopt.server.navermapserver.domain.Place;
 import dosopt.server.navermapserver.repository.DirectionRepository;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,4 +39,11 @@ public class PlaceService {
 		Place place = placeRepository.findByIdOrThrow(placeId);
 		return PlaceDetailInfoResponse.of(place);
 	}
+
+	public List<RelatedPlaceResponse> getAllPlace() {
+		return placeRepository.findAll().stream()
+				.map(place -> RelatedPlaceResponse.of(place))
+				.collect(Collectors.toList());
+	}
+
 }
