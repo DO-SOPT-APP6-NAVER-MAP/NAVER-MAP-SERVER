@@ -1,4 +1,4 @@
-package dosopt.server.navermapserver.dto;
+package dosopt.server.navermapserver.api.dto;
 
 import java.util.List;
 
