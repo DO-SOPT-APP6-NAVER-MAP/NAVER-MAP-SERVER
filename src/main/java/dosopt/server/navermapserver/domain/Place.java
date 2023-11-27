@@ -6,9 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Place {
 
@@ -41,13 +43,13 @@ public class Place {
 	@Column(name = "direction", nullable = false, length = 30)
 	private String direction;
 
-	@Column(name = "close_time", nullable = false)
-	private int closeTime;
+	@Column(name = "close_time", nullable = false, length = 10)
+	private String closeTime;
 
 	@Column(name = "number", nullable = false, length = 20)
 	private String number;
-	@Column(name = "character", nullable = false, length = 30)
-	private String character;
+	@Column(name = "characters", nullable = false, length = 50)
+	private String characters;
 	@Column(name = "sns", nullable = false, length = 50)
 	private String sns;
 
