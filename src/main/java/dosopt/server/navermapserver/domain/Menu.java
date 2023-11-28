@@ -23,6 +23,9 @@ public class Menu {
 	@Column(name = "menu_name", nullable = false, length = 20)
 	private String menuName;
 
+	@Column(name="menu_price",nullable = false)
+	private Integer menuPrice;
+
 	@Column(name = "menu_img_url", nullable = false)
 	private String menuImgUrl;
 
