@@ -25,16 +25,22 @@ public class Place {
 
 	@Column(name = "name", nullable = false, length = 30)
 	private String name;
+
 	@Column(name = "category", nullable = false, length = 30)
 	private String category;
+
 	@Column(name = "detail_address", nullable = false, length = 50)
 	private String detailAddress;
+
 	@Column(name = "distance", nullable = false, length = 10)
 	private String distance;
+
 	@Column(name = "description", nullable = false, length = 50)
 	private String description;
+
 	@Column(name = "address", nullable = false, length = 10)
 	private String address;
+
 	@Column(name = "stars", nullable = false, length = 5)
 	private String stars;
 
@@ -52,8 +58,10 @@ public class Place {
 
 	@Column(name = "number", nullable = false, length = 20)
 	private String number;
+
 	@Column(name = "characters", nullable = false, length = 50)
 	private String characters;
+
 	@Column(name = "sns", nullable = false, length = 50)
 	private String sns;
 
@@ -62,4 +70,16 @@ public class Place {
 
 	@OneToMany(mappedBy = "place", orphanRemoval = true)
 	private List<Preview> images = new ArrayList<>();
+
+	@OneToMany(mappedBy = "place", orphanRemoval = true)
+	private List<Menu> menus = new ArrayList<>();
+
+	@OneToMany(mappedBy = "place", orphanRemoval = true)
+	private List<VisitorReview> visitorReviews = new ArrayList<>();
+
+	@OneToMany(mappedBy = "place", orphanRemoval = true)
+	private List<BlogReview> blogReviews = new ArrayList<>();
+
+	@OneToMany(mappedBy = "place", orphanRemoval = true)
+	private List<Direction> directions = new ArrayList<>();
 }

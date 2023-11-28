@@ -1,12 +1,12 @@
 package dosopt.server.navermapserver.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import dosopt.server.navermapserver.api.dto.DirectionsResponse;
 import dosopt.server.navermapserver.api.dto.PlaceDetailInfoResponse;
 import dosopt.server.navermapserver.api.dto.PlaceInfoResponse;
 import dosopt.server.navermapserver.api.dto.RelatedPlaceResponse;
@@ -35,13 +35,10 @@ public class PlaceService {
 	private final VisitorReviewRepository visitorReviewRepository;
 	private final BlogReviewRepository blogReviewRepository;
 
-	public List<String> getDirectionImageList(Long id) {
-		List<String> result = new ArrayList<>();
-		List<Direction> directions = directionRepository.findAllByPlaceId(id);
-		for (Direction direction : directions) {
-			result.add(direction.getRoute());
-		}
-		return result;
+	public DirectionsResponse getDirectionImageList(Long placeId) {
+		Place place = placeRepository.findByIdOrThrow(placeId);
+		List<Direction> directions = directionRepository.findAllByPlaceId(placeId);
+		return DirectionsResponse.of(directions);
 	}
 
 	public PlaceInfoResponse getPlaceInfo(Long placeId) {

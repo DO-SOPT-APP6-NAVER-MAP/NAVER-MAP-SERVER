@@ -3,9 +3,7 @@ package dosopt.server.navermapserver.api.dto;
 import java.util.List;
 
 public record DirectionResponse(
-        List<String> directions
+	Long directionId,
+	String route
 ) {
-    public static DirectionResponse of(List<String> directions) {
-        return new DirectionResponse(directions);
-    }
 }
