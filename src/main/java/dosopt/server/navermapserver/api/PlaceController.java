@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import dosopt.server.navermapserver.api.dto.DirectionResponse;
+import dosopt.server.navermapserver.api.dto.DirectionsResponse;
 import dosopt.server.navermapserver.api.dto.PlaceDetailInfoResponse;
 import dosopt.server.navermapserver.api.dto.PlaceInfoResponse;
 import dosopt.server.navermapserver.api.dto.RelatedPlaceResponse;
@@ -25,9 +25,9 @@ public class PlaceController {
 	private final PlaceService placeService;
 
 	@GetMapping("/place/{placeId}/route")
-	public ApiResponse<DirectionResponse> getDirections(@PathVariable("placeId") Long id) {
-		return ApiResponse.success(
-			HttpStatus.OK, "특정 장소의 길찾기 방법 조회에 성공했습니다.", DirectionResponse.of(placeService.getDirectionImageList(id)));
+	public ApiResponse<DirectionsResponse> getDirections(@PathVariable("placeId") Long placeId) {
+		return ApiResponse.success(HttpStatus.OK, "특정 장소의 길찾기 방법 조회에 성공했습니다.",
+			placeService.getDirectionImageList(placeId));
 	}
 
 	@GetMapping(value = "/place/{placeId}")
