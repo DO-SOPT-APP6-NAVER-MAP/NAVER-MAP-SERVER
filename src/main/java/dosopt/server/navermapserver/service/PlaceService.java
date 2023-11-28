@@ -10,12 +10,18 @@ import org.springframework.transaction.annotation.Transactional;
 import dosopt.server.navermapserver.api.dto.PlaceDetailInfoResponse;
 import dosopt.server.navermapserver.api.dto.PlaceInfoResponse;
 import dosopt.server.navermapserver.api.dto.RelatedPlaceResponse;
+import dosopt.server.navermapserver.domain.BlogReview;
 import dosopt.server.navermapserver.domain.Direction;
+import dosopt.server.navermapserver.domain.Menu;
 import dosopt.server.navermapserver.domain.Place;
 import dosopt.server.navermapserver.domain.Preview;
+import dosopt.server.navermapserver.domain.VisitorReview;
+import dosopt.server.navermapserver.repository.BlogReviewRepository;
 import dosopt.server.navermapserver.repository.DirectionRepository;
+import dosopt.server.navermapserver.repository.MenuRepository;
 import dosopt.server.navermapserver.repository.PlaceRepository;
 import dosopt.server.navermapserver.repository.PreviewRepository;
+import dosopt.server.navermapserver.repository.VisitorReviewRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -25,6 +31,9 @@ public class PlaceService {
 	private final PlaceRepository placeRepository;
 	private final DirectionRepository directionRepository;
 	private final PreviewRepository previewRepository;
+	private final MenuRepository menuRepository;
+	private final VisitorReviewRepository visitorReviewRepository;
+	private final BlogReviewRepository blogReviewRepository;
 
 	public List<String> getDirectionImageList(Long id) {
 		List<String> result = new ArrayList<>();
@@ -43,7 +52,10 @@ public class PlaceService {
 
 	public PlaceDetailInfoResponse getPlaceDetailInfo(Long placeId) {
 		Place place = placeRepository.findByIdOrThrow(placeId);
-		return PlaceDetailInfoResponse.of(place);
+		List<Menu> menus = menuRepository.findByPlaceId(placeId);
+		List<VisitorReview> visitorReviews = visitorReviewRepository.findByPlaceId(placeId);
+		List<BlogReview> blogReviews = blogReviewRepository.findByPlaceId(placeId);
+		return PlaceDetailInfoResponse.of(place, menus, visitorReviews, blogReviews);
 	}
 
 	public List<RelatedPlaceResponse> getAllPlace() {
