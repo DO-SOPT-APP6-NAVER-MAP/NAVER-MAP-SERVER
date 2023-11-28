@@ -14,10 +14,12 @@ import dosopt.server.navermapserver.domain.Direction;
 import dosopt.server.navermapserver.domain.Menu;
 import dosopt.server.navermapserver.domain.Place;
 import dosopt.server.navermapserver.domain.Preview;
+import dosopt.server.navermapserver.domain.VisitorReview;
 import dosopt.server.navermapserver.repository.DirectionRepository;
 import dosopt.server.navermapserver.repository.MenuRepository;
 import dosopt.server.navermapserver.repository.PlaceRepository;
 import dosopt.server.navermapserver.repository.PreviewRepository;
+import dosopt.server.navermapserver.repository.VisitorReviewRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -28,6 +30,7 @@ public class PlaceService {
 	private final DirectionRepository directionRepository;
 	private final PreviewRepository previewRepository;
 	private final MenuRepository menuRepository;
+	private final VisitorReviewRepository visitorReviewRepository;
 
 	public List<String> getDirectionImageList(Long id) {
 		List<String> result = new ArrayList<>();
@@ -47,7 +50,8 @@ public class PlaceService {
 	public PlaceDetailInfoResponse getPlaceDetailInfo(Long placeId) {
 		Place place = placeRepository.findByIdOrThrow(placeId);
 		List<Menu> menus = menuRepository.findByPlaceId(placeId);
-		return PlaceDetailInfoResponse.of(place, menus);
+		List<VisitorReview> visitorReviews = visitorReviewRepository.findByPlaceId(placeId);
+		return PlaceDetailInfoResponse.of(place, menus, visitorReviews);
 	}
 
 	public List<RelatedPlaceResponse> getAllPlace() {

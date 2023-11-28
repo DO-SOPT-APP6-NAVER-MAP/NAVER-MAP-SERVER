@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import dosopt.server.navermapserver.domain.Menu;
 import dosopt.server.navermapserver.domain.Place;
+import dosopt.server.navermapserver.domain.VisitorReview;
 
 public record PlaceDetailInfoResponse(
 	String name,
@@ -20,12 +21,19 @@ public record PlaceDetailInfoResponse(
 	String characters,
 	String sns,
 	String detail,
-	List<MenuInfoResponse> menuInfos
+	List<MenuInfoResponse> menuInfos,
+	List<VisitorReviewInfoResponse> visitorReviewInfos
 ) {
 
-	public static PlaceDetailInfoResponse of(Place place, List<Menu> menus) {
+	public static PlaceDetailInfoResponse of(Place place, List<Menu> menus, List<VisitorReview> visitorReviews) {
 		List<MenuInfoResponse> menuInfos = menus.stream()
 			.map(menu -> new MenuInfoResponse(menu.getId(), menu.getMenuName(), menu.getMenuImgUrl()))
+			.collect(Collectors.toList());
+
+		List<VisitorReviewInfoResponse> visitorReviewInfos = visitorReviews.stream()
+			.map(visitorReview -> new VisitorReviewInfoResponse(visitorReview.getId(),
+				visitorReview.getVisitorReviewAuthor(), visitorReview.getVisitorReviewContent(),
+				visitorReview.getVisitorReviewAuthorThumbnail(), visitorReview.getVisitorReviewImgUrl()))
 			.collect(Collectors.toList());
 
 		return new PlaceDetailInfoResponse(
@@ -42,7 +50,8 @@ public record PlaceDetailInfoResponse(
 			place.getCharacters(),
 			place.getSns(),
 			place.getDetail(),
-			menuInfos
+			menuInfos,
+			visitorReviewInfos
 		);
 	}
 }
